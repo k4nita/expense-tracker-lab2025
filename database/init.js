@@ -17,7 +17,6 @@ const initializeDatabase = () => {
         console.error('Error creating database:', err);
         process.exit(1);
       }
-      console.log('Database created or already exists');
       
       // Connect to the database to create tables
       connection.query(`USE expense_db`, (err) => {
@@ -104,27 +103,26 @@ const initializeDatabase = () => {
         // Execute all table creation queries
         connection.query(createCategoriesTable, (err) => {
           if (err) console.error('Error creating categories table:', err);
-          else console.log('Categories table created or already exists');
           
           connection.query(createExpensesTable, (err) => {
             if (err) console.error('Error creating expenses table:', err);
-            else console.log('Expenses table created or already exists');
+           
             
             connection.query(createIncomeTable, (err) => {
               if (err) console.error('Error creating income table:', err);
-              else console.log('Income table created or already exists');
+              
               
               connection.query(createUsersTable, (err) => {
                 if (err) console.error('Error creating users table:', err);
-                else console.log('Users table created or already exists');
+               
                 
                 connection.query(createBudgetsTable, (err) => {
                   if (err) console.error('Error creating budgets table:', err);
-                  else console.log('Budgets table created or already exists');
+                 
                   
                   connection.query(insertDefaultCategories, (err) => {
                     if (err) console.error('Error inserting default categories:', err);
-                    else console.log('Default categories added if they didn\'t exist');
+                
                     
                     console.log('Database initialization completed');
                     connection.end();
@@ -138,8 +136,5 @@ const initializeDatabase = () => {
     }
   );
 };
-
-// Run initialization
-initializeDatabase();
 
 module.exports = initializeDatabase; 
