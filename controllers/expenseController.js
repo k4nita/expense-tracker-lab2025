@@ -1,4 +1,4 @@
-const db = require('../db');
+const db = require('../database/config');
 
 exports.getExpenses = (req, res) => {
   db.query('SELECT * FROM expenses', (err, results) => {
