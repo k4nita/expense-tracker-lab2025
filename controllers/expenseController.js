@@ -1,4 +1,4 @@
-const db = require('../db');
+const db = require('../database/database');
 
 const getExpenses = (req, res) => {
   const query = 'SELECT * FROM expenses';
