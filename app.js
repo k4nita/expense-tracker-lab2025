@@ -1,6 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const expenseRoutes = require('./routes/expenseRoutes');
+const initializeDatabase = require('./database/init');
+
+console.log('Initializing database...');
+initializeDatabase();
 
 const app = express();
 
