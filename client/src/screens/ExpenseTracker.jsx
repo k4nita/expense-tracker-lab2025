@@ -1,5 +1,5 @@
-import ExpenseTracker from "../expense-tracker"
+import ExpenseTracker from "../views/expense-tracker";
 
-export default function Page() {
-  return <ExpenseTracker />
+export default function ExpenseTrackerScreen() {
+  return <ExpenseTracker />;
 }

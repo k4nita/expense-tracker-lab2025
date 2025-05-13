@@ -48,22 +48,18 @@ import {
 import { categories } from "../lib/categoryData"
 
 // Define expense and category types
-type Expense = {
-  id: string
-  amount: number
-  description: string
-  category: string
-  date: string
-}
+// Expense object format:
+// {
+//   id: '1',
+//   amount: 25.50,
+//   description: 'Coffee',
+//   category: 'Food',
+//   date: '2025-05-01'
+// }
 
-type Category = {
-  name: string
-  color: string
-  icon: React.ReactNode
-}
 
 export default function Dashboard() {
-  const [expenses, setExpenses] = useState<Expense[]>([
+  const [expenses, setExpenses] = useState([
     { id: "1", amount: 45.99, description: "Grocery Shopping", category: "Food", date: "2025-03-05" },
     { id: "2", amount: 12.5, description: "Bus Ticket", category: "Transport", date: "2025-03-04" },
     { id: "3", amount: 89.99, description: "New Shoes", category: "Shopping", date: "2025-03-03" },
@@ -117,7 +113,7 @@ export default function Dashboard() {
   const handleAddExpense = () => {
     if (!newExpense.amount || !newExpense.description) return
 
-    const expense: Expense = {
+    const expense = {
       id: Date.now().toString(),
       amount: parseFloat(newExpense.amount),
       description: newExpense.description,
