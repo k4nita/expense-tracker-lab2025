@@ -1,5 +1,5 @@
 import * as React from "react"
-import { cn } from "../../lib/utils"
+import { cn } from "../../../lib/utils"
 
 export function Dialog({ children }) {
   return <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">{children}</div>

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { categories } from '../lib/categoryData';
 
 function AddExpense() {
-    const categories = ["Food", "Transport", "Shopping", "Bills", "Entertainment", "Other"];
+    const categoryNames = categories.map((c) => c.name);
     const [form, setForm] = useState({
         date: '',
         type: 'expense',
@@ -80,7 +81,7 @@ function AddExpense() {
                     required
                 >
                     <option value="">Select category</option>
-                    {categories.map((cat) => (
+                    {categoryNames.map((cat) => (
                         <option key={cat} value={cat}>
                             {cat}
                         </option>

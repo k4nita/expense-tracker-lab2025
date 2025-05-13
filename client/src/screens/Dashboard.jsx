@@ -12,8 +12,8 @@ import {
   Utensils,
   Zap,
 } from "lucide-react"
-import { Button } from "../components/ui/button"
-import { Input } from "../components/ui/input"
+import { Button } from "../components/ui/common/button"
+import { Input } from "../components/ui/form/input"
 import {
   Card,
   CardContent,
@@ -21,7 +21,7 @@ import {
   CardTitle,
   CardDescription,
   CardFooter,
-} from "../components/ui/card"
+} from "../components/ui/layout/card"
 import {
   Dialog,
   DialogContent,
@@ -29,34 +29,41 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogFooter,
-} from "../components/ui/dialog"
+} from "../components/ui/layout/dialog"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../components/ui/select"
-import { Label } from "../components/ui/label"
-import { Tabs, TabsList, TabsTrigger } from "../components/ui/tabs"
+} from "../components/ui/form/select"
+import { Label } from "../components/ui/form/label"
+import { Tabs, TabsList, TabsTrigger } from "../components/ui/layout/tabs"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../components/ui/dropdown-menu"
+} from "../components/ui/popover/dropdown-menu"
+import { categories } from "../lib/categoryData"
+
+// Define expense and category types
+type Expense = {
+  id: string
+  amount: number
+  description: string
+  category: string
+  date: string
+}
+
+type Category = {
+  name: string
+  color: string
+  icon: React.ReactNode
+}
 
 export default function Dashboard() {
-  const categories = [
-    { name: "Food", color: "bg-blue-500/80", icon: <Utensils className="h-4 w-4" /> },
-    { name: "Transport", color: "bg-green-500/80", icon: <Car className="h-4 w-4" /> },
-    { name: "Shopping", color: "bg-pink-500/80", icon: <ShoppingBag className="h-4 w-4" /> },
-    { name: "Bills", color: "bg-yellow-500/80", icon: <Zap className="h-4 w-4" /> },
-    { name: "Entertainment", color: "bg-orange-500/80", icon: <Film className="h-4 w-4" /> },
-    { name: "Other", color: "bg-purple-500/80", icon: <Home className="h-4 w-4" /> },
-  ]
-
-  const [expenses, setExpenses] = useState([
+  const [expenses, setExpenses] = useState<Expense[]>([
     { id: "1", amount: 45.99, description: "Grocery Shopping", category: "Food", date: "2025-03-05" },
     { id: "2", amount: 12.5, description: "Bus Ticket", category: "Transport", date: "2025-03-04" },
     { id: "3", amount: 89.99, description: "New Shoes", category: "Shopping", date: "2025-03-03" },
@@ -110,7 +117,7 @@ export default function Dashboard() {
   const handleAddExpense = () => {
     if (!newExpense.amount || !newExpense.description) return
 
-    const expense = {
+    const expense: Expense = {
       id: Date.now().toString(),
       amount: parseFloat(newExpense.amount),
       description: newExpense.description,
@@ -128,21 +135,21 @@ export default function Dashboard() {
     setIsAddExpenseOpen(false)
   }
 
-  const handleDeleteExpense = (id) => {
+  const handleDeleteExpense = (id: string) => {
     setExpenses(expenses.filter((e) => e.id !== id))
   }
 
-  const getCategoryColor = (name) => {
+  const getCategoryColor = (name: string) => {
     const category = categories.find((c) => c.name === name)
     return category ? category.color : "bg-gray-500/80"
   }
 
-  const formatDate = (dateString) => {
+  const formatDate = (dateString: string) => {
     const date = new Date(dateString)
     return date.toLocaleDateString("en-US", { month: "short", day: "numeric" })
   }
 
-  const getCategoryIcon = (name) => {
+  const getCategoryIcon = (name: string) => {
     const category = categories.find((c) => c.name === name)
     return category ? category.icon : <CreditCard className="h-4 w-4" />
   }
