@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db'); // adjust this if your db file is in another path
+const db = require('../database/database'); // adjust this if your db file is in another path
 
 // Endpoint to receive and insert multiple offline expenses
 router.post('/expenses', async (req, res) => {
