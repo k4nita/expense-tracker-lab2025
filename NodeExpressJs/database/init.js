@@ -13,7 +13,7 @@ const initializeDatabase = () => {
 
   // Create the database if it doesn't exist
   connection.query(
-    `CREATE DATABASE IF NOT EXISTS expense_db`,
+    `CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME}`,
     (err) => {
       if (err) {
         console.error('Error creating database:', err);
@@ -21,7 +21,7 @@ const initializeDatabase = () => {
       }
       
       // Connect to the database to create tables
-      connection.query(`USE expense_db`, (err) => {
+      connection.query(`USE ${process.env.DB_NAME}`, (err) => {
         if (err) {
           console.error('Error using database:', err);
           process.exit(1);
