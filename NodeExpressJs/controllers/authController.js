@@ -2,15 +2,18 @@ const db = require('../database/database');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const SECRET_KEY = 'super_secrete_key16'; 
+const SECRET_KEY = 'super_secrete_key16';
 
 exports.register = (req, res) => {
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
   const hash = bcrypt.hashSync(password, 10);
 
-  const sql = 'INSERT INTO users (email, password) VALUES (?, ?)';
-  db.query(sql, [email, hash], (err) => {
-    if (err) return res.status(500).json({ error: 'User already exists or DB error' });
+  const sql = 'INSERT INTO users (username, email, password) VALUES (?,?, ?)';
+  db.query(sql, [name, email, hash], (err) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({ error: 'User already exists or DB error' });
+    }
     res.status(201).json({ message: 'User registered successfully' });
   });
 };
