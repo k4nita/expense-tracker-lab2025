@@ -5,12 +5,6 @@ import {
   MoreHorizontal,
   CreditCard,
   DollarSign,
-  Home,
-  ShoppingBag,
-  Car,
-  Film,
-  Utensils,
-  Zap,
 } from "lucide-react"
 import { Button } from "../components/ui/common/button"
 import { Input } from "../components/ui/form/input"
@@ -131,21 +125,21 @@ export default function Dashboard() {
     setIsAddExpenseOpen(false)
   }
 
-  const handleDeleteExpense = (id: string) => {
+  const handleDeleteExpense = (id) => {
     setExpenses(expenses.filter((e) => e.id !== id))
   }
 
-  const getCategoryColor = (name: string) => {
+  const getCategoryColor = (name) => {
     const category = categories.find((c) => c.name === name)
     return category ? category.color : "bg-gray-500/80"
   }
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString) => {
     const date = new Date(dateString)
     return date.toLocaleDateString("en-US", { month: "short", day: "numeric" })
   }
 
-  const getCategoryIcon = (name: string) => {
+  const getCategoryIcon = (name) => {
     const category = categories.find((c) => c.name === name)
     return category ? category.icon : <CreditCard className="h-4 w-4" />
   }
