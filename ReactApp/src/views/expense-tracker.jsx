@@ -176,15 +176,11 @@ export default function ExpenseTracker() {
   }
 
   return (
-    <div className="relative">
-     <div
-  className="absolute inset-0 bg-cover bg-center opacity-20 mix-blend-overlay"
-  style={{ backgroundImage: "url('/placeholder.svg')" }}
-></div>
-      <div className="min-h-screen bg-gradient-to-br from-navy-900 via-navy-800 to-navy-700 flex flex-col">
+    <div className="relative min-h-screen flex flex-col bg-gradient-to-br from-navy-900 via-navy-800 to-navy-700">
+      <div className="absolute inset-0 bg-[url('placeholder.jpg')] bg-cover bg-center opacity-20 mix-blend-overlay pointer-events-none z-0"></div>
 
       {/* Header */}
-      <header className="sticky top-0 z-10 backdrop-blur-xl bg-white/10 border-b border-white/20">
+      <header className="sticky top-0 z-10 backdrop-blur-xl bg-white/10 border-b border-white/20 relative z-10">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Wallet className="h-6 w-6 text-white" />
@@ -288,7 +284,7 @@ export default function ExpenseTracker() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 container mx-auto px-4 py-6">
+      <main className="flex-1 container mx-auto px-4 py-6 relative z-10">
         <div className="grid gap-6">
           {/* Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -520,7 +516,6 @@ export default function ExpenseTracker() {
           </Card>
         </div>
       </main>
-      </div> 
-    </div>   
+    </div>
   )
 }
