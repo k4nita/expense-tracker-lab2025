@@ -1,6 +1,7 @@
-const { Expense } = require('../models');
+const { getDbConnection } = require('../database/database');
 
 const syncExpenses = (req, res) => {
+  const db = getDbConnection();
   const localExpenses = req.body;
 
   if (!Array.isArray(localExpenses)) {
@@ -11,7 +12,8 @@ const syncExpenses = (req, res) => {
   let completed = 0;
 
   localExpenses.forEach((expense, index) => {
-    Expense.create(expense, (err, result) => {
+    const query = 'INSERT INTO expenses (date, type, category, amount, notes) VALUES (?, ?, ?, ?, ?)';
+    db.query(query, [expense.date, expense.type, expense.category, expense.amount, expense.notes], (err, result) => {
       completed++;
 
       if (!err) {

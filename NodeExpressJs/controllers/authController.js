@@ -1,10 +1,11 @@
-const db = require('../database/database');
+const { getDbConnection } = require('../database/database');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const SECRET_KEY = 'super_secrete_key16';
 
 exports.register = (req, res) => {
+  const db = getDbConnection();
   const { name, email, password } = req.body;
   const hash = bcrypt.hashSync(password, 10);
 
@@ -19,6 +20,7 @@ exports.register = (req, res) => {
 };
 
 exports.login = (req, res) => {
+  const db = getDbConnection();
   const { email, password } = req.body;
 
   const sql = 'SELECT * FROM users WHERE email = ?';

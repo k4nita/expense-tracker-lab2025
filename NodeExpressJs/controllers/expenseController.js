@@ -1,6 +1,7 @@
-const db = require('../database/database');
+const { getDbConnection } = require('../database/database');
 
 const getExpenses = (req, res) => {
+  const db = getDbConnection();
   const query = 'SELECT * FROM expenses';
   db.query(query, (err, results) => {
     if (err) {
@@ -14,6 +15,7 @@ const getExpenses = (req, res) => {
 
 // POST a new expense
 const addExpense = (req, res) => {
+  const db = getDbConnection();
   const { date, type, category, amount, notes } = req.body;
   const query = 'INSERT INTO expenses (date, type, category, amount, notes) VALUES (?, ?, ?, ?, ?)';
   db.query(query, [date, type, category, amount, notes], (err, result) => {
@@ -27,6 +29,7 @@ const addExpense = (req, res) => {
 
 // PUT update an expense by ID
 const updateExpense = (req, res) => {
+  const db = getDbConnection();
   const { id } = req.params;
   const { date, type, category, amount, notes } = req.body;
   const query = 'UPDATE expenses SET date = ?, type = ?, category = ?, amount = ?, notes = ? WHERE id = ?';
@@ -41,6 +44,7 @@ const updateExpense = (req, res) => {
 
 // DELETE expense
 const deleteExpense = (req, res) => {
+  const db = getDbConnection();
   const expenseId = req.params.id;
 
   const sql = 'DELETE FROM expenses WHERE id = ?';
