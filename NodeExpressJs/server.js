@@ -1,15 +1,17 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const cookieParser = require('cookie-parser'); 
+const helmet = require('helmet');
+const xss = require('xss-clean');
+const rateLimit = require('express-rate-limit');
+
+
 const expenseRoutes = require('./routes/expenseRoutes');
 const authRoutes = require('./routes/authRoutes');
 const syncRoutes = require('./routes/syncRoutes');
 const initializeDatabase = require('./database/init');
 const errorHandler = require('./middleware/errorHandler');
-const helmet = require('helmet');
-const xss = require('xss-clean');
-const rateLimit = require('express-rate-limit');
-const mongoSanitize = require('express-mongo-sanitize');
 const logger = require('./middleware/logger');
 
 // Initialize database
@@ -20,40 +22,44 @@ initializeDatabase();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
-app.use(cors());
+// ✅ MIDDLEWARE
+app.use(cors({
+  origin: 'http://localhost:3000', 
+  credentials: true               
+}));
 app.use(express.json());
+app.use(cookieParser());         
 
-// Security Middlewares
-app.use(helmet()); // sets secure headers
-app.use(xss()); // prevents cross-site scripting attacks
-app.use(mongoSanitize()); // prevents NoSQL injection
+
+app.use(helmet());
+app.use(xss());
+
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per window
+  windowMs: 15 * 60 * 1000, 
+  max: 100,
 });
 app.use(limiter);
 
-//logger
+
 app.use(logger);
 
 
-// Routes
 app.use('/api', expenseRoutes);
 app.use('/api', syncRoutes);
 app.use('/api/auth', authRoutes);
 
-//ErrroHandler
+
 app.use((req, res, next) => {
   res.status(404).json({ message: 'Route not found' });
 });
 
+
 app.use(errorHandler);
 
-// Start server
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
-module.exports = app; // Export for testing purposes
+module.exports = app;
